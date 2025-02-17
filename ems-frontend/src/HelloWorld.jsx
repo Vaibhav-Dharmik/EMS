@@ -1,7 +1,7 @@
 function HelloWorld(params) {
   return (
     <div>
-      <h1>Hello World from component!</h1>
+      <h1 className="text-center">Hello World!</h1>
     </div>
   );
 }
