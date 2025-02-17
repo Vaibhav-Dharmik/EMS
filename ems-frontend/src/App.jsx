@@ -5,6 +5,9 @@ import "./App.css";
 import HelloWorld from "./HelloWorld";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ListEmployeeComponent from "./components/ListEmployeeComponent";
+import HeaderComponent from "./components/HeaderComponent";
+import FooterComponent from "./components/FooterComponent";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -12,7 +15,19 @@ function App() {
   return (
     <>
       {/* <HelloWorld /> */}
-      <ListEmployeeComponent />
+      <BrowserRouter>
+        <HeaderComponent />
+        <Routes>
+          {/* http://localhost:3000 */}
+          <Route path="/" element={<ListEmployeeComponent />}></Route>
+          {/* http://localhost:3000/employees */}
+          <Route path="/employees" element={<ListEmployeeComponent />}></Route>
+          <Route path="/hello" element={<HelloWorld />}></Route>
+
+        </Routes>
+        {/* <ListEmployeeComponent /> */}
+        <FooterComponent />
+      </BrowserRouter>
     </>
   );
 }
