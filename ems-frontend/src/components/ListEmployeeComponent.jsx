@@ -63,7 +63,7 @@ const ListEmployeeComponent = () => {
           {employees.map((employee) => (
             <tr key={employee.id}>
               <td>{employee.id}</td>
-              <td>{employee.firestName}</td>
+              <td>{employee.firstName}</td>
               <td>{employee.lastName}</td>
               <td>{employee.email}</td>
             </tr>

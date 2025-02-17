@@ -1,14 +1,25 @@
 import React, { useState } from "react";
+import { createEmployee } from "../services/EmployeeService";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeComponent = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
 
+  const navigator = useNavigate();
+
   const saveEmployee = (e) => {
     e.preventDefault();
     const employee = { firstName, lastName, email };
     console.log("Employee => " + JSON.stringify(employee));
+    createEmployee(employee).then((response) => {
+      console.log(
+        "Employee added successfully => " + JSON.stringify(response.data)
+      );
+
+      navigator("/employees");
+    });
   };
 
   return (
