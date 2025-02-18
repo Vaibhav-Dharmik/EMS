@@ -1,6 +1,10 @@
-import React, { use, useEffect, useState } from "react";
-import { createEmployee, getEmployee } from "../services/EmployeeService";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  createEmployee,
+  getEmployee,
+  updateEmployee,
+} from "../services/EmployeeService";
 
 const EmployeeComponent = () => {
   const [firstName, setFirstName] = useState("");
@@ -30,22 +34,45 @@ const EmployeeComponent = () => {
     }
   }, [id]);
 
-  const saveEmployee = (e) => {
+  const saveOrUpdateEmployee = (e) => {
     e.preventDefault();
 
     if (validateForm()) {
-      // return;
       const employee = { firstName, lastName, email };
 
       console.log("Employee => " + JSON.stringify(employee));
-
-      createEmployee(employee).then((response) => {
+      
+      
+      updateEmployee(id, employee)
+      .then((response) => {
         console.log(
-          "Employee added successfully => " + JSON.stringify(response.data)
+          "Employee from outside updated successfully => " +
+            JSON.stringify(response.data)
         );
+        // navigator("/employees");
+      })
+      .catch((error) => console.error(error));
 
-        navigator("/employees");
-      });
+
+      if (id) {
+        updateEmployee(id, employee)
+          .then((response) => {
+            console.log(
+              "Employee updated successfully => " +
+                JSON.stringify(response.data)
+            );
+            // navigator("/employees");
+          })
+          .catch((error) => console.error(error));
+      } else {
+        createEmployee(employee).then((response) => {
+          console.log(
+            "Employee added successfully => " + JSON.stringify(response.data)
+          );
+
+          navigator("/employees");
+        });
+      }
     }
   };
 
@@ -102,6 +129,7 @@ const EmployeeComponent = () => {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
+
                 {errors.firstName && (
                   <div className="invalid-feedback">{errors.firstName}</div>
                 )}
@@ -116,7 +144,7 @@ const EmployeeComponent = () => {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
-                {errors.firstName && (
+                {errors.lastName && (
                   <div className="invalid-feedback">{errors.lastName}</div>
                 )}
               </div>
@@ -130,12 +158,15 @@ const EmployeeComponent = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                {errors.firstName && (
+                {errors.email && (
                   <div className="invalid-feedback">{errors.email}</div>
                 )}
               </div>
-              <button className="btn btn-success" onClick={saveEmployee}>
-                Save
+              <button
+                className="btn btn-success"
+                onClick={saveOrUpdateEmployee}
+              >
+                Submit
               </button>
             </form>
           </div>
