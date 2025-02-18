@@ -41,18 +41,6 @@ const EmployeeComponent = () => {
       const employee = { firstName, lastName, email };
 
       console.log("Employee => " + JSON.stringify(employee));
-      
-      
-      updateEmployee(id, employee)
-      .then((response) => {
-        console.log(
-          "Employee from outside updated successfully => " +
-            JSON.stringify(response.data)
-        );
-        // navigator("/employees");
-      })
-      .catch((error) => console.error(error));
-
 
       if (id) {
         updateEmployee(id, employee)
@@ -61,7 +49,7 @@ const EmployeeComponent = () => {
               "Employee updated successfully => " +
                 JSON.stringify(response.data)
             );
-            // navigator("/employees");
+            navigator("/employees");
           })
           .catch((error) => console.error(error));
       } else {
